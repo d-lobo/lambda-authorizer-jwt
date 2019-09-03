@@ -1,11 +1,18 @@
 # JWT Token Lambda Authorizer
+
+## Changes:
+  * added support for (AWS API Gateway) websockets authorization
+  * added support for (legacy) websocket clients (auth via queryParam)
+
+----
+
 ## Overview
 This function uses the `jwks-rsa` and `jsonwebtoken` npm packages to implement token validation of JSON Web Tokens (JWTs). These tokens are granted by ID Providers using the OAuth2 protocol. 
 
 The authorizer expects to find a JWT in the Authorization header.
 
-The public RSA256 key(s) from the Identity Provider are fetched and cached. The JWT is then validated with the public RSA key without further HTTP calls. This means that there is no token introspection performed at the ID Provider server. This allows the authorizer to perform authorization based on signed, unexpired tokens that contain the required issuer and audience credentials per OIDC spec. This also enables extremely low latency times for invoking the AWS API Gateway calls to protected resources.
-
+The public RSA256 key(s) from the Identity Provider are fetched and cached. The JWT is then validated with the public RSA key without further HTTP calls. This means that there is no token introspection performed at the ID Provider server. This allows the authorizer to perform authorization based on signed, unexpired tokens that contain the required issuer and audience credentials per OIDC spec. This also enables extremely low latency times for invoking the AWS API Gateway calls to protected resources. 
+  
 ## Deployment
 Upload the .zip file to AWS Lambda in the same region as the API Gateway resources you intend to protect with this authorizer.
 
